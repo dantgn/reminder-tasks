@@ -1,8 +1,26 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+This is a Vite + React project that implements the Frontend part of a Reminder Tasks application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can basically create new Todo Tasks, display them on a dashboard and remove them.
+
+I have used TailwindCSS to make the UI more elegant and responsive.
+
+This app needs a working API for the Backend part, which is implemented in a separate .NET API project which can be found at [.NET Backend API](https://github.com/dantgn/reminder-tasks-api-dotnet)
+
+
+See screenshots of the application below:
+
+
+### Desktop version
+![alt text](public/tasks_reminder_app1.png)
+
+![alt text](public/tasks_reminder_app2.png)
+
+
+### Mobile version
+
+![alt text](public/mobile_tasks_app1.png)
+
+![alt text](public/mobile_tasks_app2.png)
