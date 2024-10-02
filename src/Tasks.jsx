@@ -6,9 +6,6 @@ function Tasks() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    if (tasks.length == 0)
-      fetch("http://localhost:5184/api/fillTodoItemsList")
-
     fetch("http://localhost:5184/api/TodoItems")
       .then(response => response.json())
       .then(data => {
@@ -17,9 +14,18 @@ function Tasks() {
       })
   }, [])
 
+  function handlePrefillList () {
+    fetch("http://localhost:5184/api/fillTodoItemsList")
+      .then(response => response.json())
+      .then(data => {
+        setTasks(data)
+        console.log(data)
+      })
+  }
+
   return (
     <>
-      <button className="btn btn-neutral btn-outline btn-wide my-5" onClick={()=>document.getElementById('addTaskModal').showModal()}>Add new task</button>
+      <button className="btn btn-neutral btn-outline btn-wide my-5 pr-2" onClick={()=>document.getElementById('addTaskModal').showModal()}>Add new task</button>
       <dialog id="addTaskModal" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">Add new Task!</h3>
@@ -32,10 +38,17 @@ function Tasks() {
           </div>
         </div>
       </dialog>
-
+      <button 
+        className="btn btn-neutral btn-outline btn-wide my-5 mx-5 px-2" 
+        disabled={tasks.length > 0} onClick={handlePrefillList}
+      >
+        Pre-fill Tasks List
+      </button>
       {
         tasks && tasks.length == 0 && (
-          <p className='text-lg'>No pending tasks</p>
+          <>
+            <p className='text-lg'>No pending tasks</p>
+          </>
         )
       }
       {
