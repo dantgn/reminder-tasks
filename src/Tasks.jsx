@@ -4,23 +4,32 @@ import TaskForm from "./TaskForm"
 
 function Tasks() {
   const [tasks, setTasks] = useState([])
+  const [addTaskResult, setAddTaskResult] = useState("")
 
   useEffect(() => {
+    fetchTasks()
+  }, [])
+
+  function fetchTasks () {
     fetch("http://localhost:5184/api/TodoItems")
       .then(response => response.json())
       .then(data => {
         setTasks(data)
-        console.log(data)
       })
-  }, [])
+      .catch(error => console.log(error.message))
+  }
 
   function handlePrefillList () {
     fetch("http://localhost:5184/api/fillTodoItemsList")
       .then(response => response.json())
       .then(data => {
         setTasks(data)
-        console.log(data)
       })
+      .catch(error => console.log(error.message))
+  }
+
+  function handleCloseForm(){
+    setAddTaskResult("")
   }
 
   return (
@@ -28,12 +37,16 @@ function Tasks() {
       <button className="btn btn-neutral btn-outline btn-wide my-5 pr-2" onClick={()=>document.getElementById('addTaskModal').showModal()}>Add new task</button>
       <dialog id="addTaskModal" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-lg">Add new Task!</h3>
-          <TaskForm tasks={tasks} setTasks={setTasks} />
+          <TaskForm
+            tasks={tasks}
+            setTasks={setTasks}
+            addTaskResult={addTaskResult}
+            setAddTaskResult={setAddTaskResult}
+          />
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button, it will close the modal */}
-              <button className="btn">Close</button>
+              <button onClick={handleCloseForm} className="btn">Close</button>
             </form>
           </div>
         </div>
@@ -63,8 +76,8 @@ function Tasks() {
               tasks.map( task => (
                 <TaskCard
                   key={task.id}
-                  title={task.title}
-                  description={task.description}
+                  task={task}
+                  fetchTasks={fetchTasks}
                 />
               ))
             }

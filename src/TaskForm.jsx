@@ -3,11 +3,10 @@ import './App.css'
 
 function TaskForm(props) {
   
-  const { tasks, setTasks } = props
+  const { tasks, setTasks, addTaskResult, setAddTaskResult } = props
 
   const [title, setTitle] = useState()
   const [description, setDescription] = useState()
-  const [result, setResult] = useState()
   
   function handleCreateNewTask (event) {
     event.preventDefault()
@@ -21,21 +20,29 @@ function TaskForm(props) {
     })
     .then(response => response.json())
     .then(data => {
-        setTasks([...tasks, data])
-        setResult("Task added successfully")
-    });
-    
+        setTasks([data, ...tasks])
+        resetFields()
+        setAddTaskResult("Task added successfully")
+    })
+    .catch(() => setAddTaskResult("Something wrong happened"))
+  }
+
+  function resetFields() {
+    setTitle("")
+    setDescription("")
   }
 
   return (
     <>
-      <form onSubmit={handleCreateNewTask}>
+      <h3 className="font-bold text-lg">Add new Task!</h3>
+      <form onSubmit={handleCreateNewTask} className="py-2">
         <label className="form-control w-full">
           <div className="label">
-            <span className="label-text">Task Title</span>
+            <span className="label-text">Title</span>
           </div>
           <input 
             type="text" 
+            value={title}
             placeholder="Type the title of your task"
             className="input input-bordered w-full"
             onChange={(event) => setTitle(event.target.value)}
@@ -43,9 +50,10 @@ function TaskForm(props) {
         </label>
         <label className="form-control">
           <div className="label">
-            <span className="label-text">Task Description</span>
+            <span className="label-text">Description</span>
           </div>
           <textarea 
+            value={description}
             className="textarea textarea-bordered h-24"
             placeholder="Describe what exactly needs to be done"
             onChange={(event) => setDescription(event.target.value)}
@@ -54,7 +62,7 @@ function TaskForm(props) {
         </label>
         <button className="text-right my-5 btn btn-wide w-full uppercase" type="submit">Create Task</button>
       </form>
-      <span className='py-5'>{result}</span>
+      <span className='py-5'>{addTaskResult}</span>
     </>
   )
 }
