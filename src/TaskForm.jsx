@@ -11,6 +11,9 @@ function TaskForm(props) {
   function handleCreateNewTask (event) {
     event.preventDefault()
 
+    if (!validTitle())
+      return false
+
     fetch("http://localhost:5184/api/TodoItems", {
       method: "POST",
       headers: {
@@ -18,13 +21,22 @@ function TaskForm(props) {
       },
       body: JSON.stringify({title: title, description: description})
     })
-    .then(response => response.json())
-    .then(data => {
-        setTasks([data, ...tasks])
-        resetFields()
-        setAddTaskResult("Task added successfully")
-    })
-    .catch(() => setAddTaskResult("Something wrong happened"))
+      .then(response => response.json())
+      .then(data => {
+          setTasks([data, ...tasks])
+          resetFields()
+          setAddTaskResult("Task added successfully")
+      })
+      .catch(() => setAddTaskResult("Something wrong happened"))
+
+  }
+
+  function validTitle () {
+    if (title === "" || title === undefined){
+      setAddTaskResult("Please add a title to the task before creating it")
+      return false
+    }
+    return true
   }
 
   function resetFields() {
