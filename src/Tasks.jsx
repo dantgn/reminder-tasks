@@ -51,15 +51,15 @@ function Tasks() {
           </div>
         </div>
       </dialog>
-      <button 
-        className="btn btn-neutral btn-outline btn-wide my-5 mx-5 px-2" 
-        disabled={tasks.length > 0} onClick={handlePrefillList}
-      >
-        Pre-fill Tasks List
-      </button>
       {
         tasks && tasks.length == 0 && (
           <>
+            <button 
+                className="btn btn-neutral btn-outline btn-wide my-2 sm:my-5 sm:mx-5 sm:px-2"
+                onClick={handlePrefillList}
+            >
+              Pre-fill Tasks List
+            </button>
             <p className='text-lg'>No pending tasks</p>
           </>
         )

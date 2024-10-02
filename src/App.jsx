@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div className='p-10'>
-        <h1 className='text-2xl p-5 text-center'>Reminder App!</h1>
+        <h1 className='text-2xl p-5 text-center text-gray-600 uppercase'>Reminder App</h1>
       </div>
       <Tasks />
     </>
