@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import TaskCard from "./TaskCard"
+import TaskForm from "./TaskForm"
 
 function Tasks() {
   const [tasks, setTasks] = useState([])
@@ -18,6 +19,20 @@ function Tasks() {
 
   return (
     <>
+      <button className="btn btn-neutral btn-outline btn-wide my-5" onClick={()=>document.getElementById('addTaskModal').showModal()}>Add new task</button>
+      <dialog id="addTaskModal" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <h3 className="font-bold text-lg">Add new Task!</h3>
+          <TaskForm tasks={tasks} setTasks={setTasks} />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
       {
         tasks && tasks.length == 0 && (
           <p className='text-lg'>No pending tasks</p>
