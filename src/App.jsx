@@ -4,6 +4,7 @@ import TaskForm from "./TaskForm"
 
 function App() {
   const [tasks, setTasks] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [addTaskResult, setAddTaskResult] = useState("")
   const VITE_BACKEND_API_ENDPOINT = import.meta.env.VITE_BACKEND_API_ENDPOINT
 
@@ -12,12 +13,14 @@ function App() {
   }, [])
 
   function fetchTasks () {
+    setIsLoading(true)
     fetch(`${VITE_BACKEND_API_ENDPOINT}/tasks`)
       .then(response => response.json())
       .then(data => {
         setTasks(data)
       })
       .catch(error => console.log(error.message))
+      .finally(() => setIsLoading(false))
   }
 
   function handleCloseForm(){
@@ -52,10 +55,21 @@ function App() {
         </div>
       </dialog>
       {
-        tasks && tasks.length == 0 && <p className='text-lg'>No pending tasks</p>
+        isLoading && (
+          <div className="grid place-items-center py-10">
+            <span className="loading loading-ring loading-lg"></span>
+          </div>
+        )
       }
       {
-        tasks && tasks.length > 0 && (
+        !isLoading && tasks && tasks.length == 0 && (
+          <div className="rounded-xl shadow-xl border-4 border-gray-400">
+            <p className='text-lg text-center p-20'>No pending tasks</p>
+          </div>
+        )
+      }
+      {
+        !isLoading && tasks && tasks.length > 0 && (
           <>
           <p className='text-lg'>List of tasks</p>
           <div className="py-1">
