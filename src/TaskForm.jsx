@@ -7,6 +7,7 @@ function TaskForm(props) {
 
   const [title, setTitle] = useState()
   const [description, setDescription] = useState()
+  const VITE_BACKEND_API_ENDPOINT = import.meta.env.VITE_BACKEND_API_ENDPOINT
   
   function handleCreateNewTask (event) {
     event.preventDefault()
@@ -14,16 +15,18 @@ function TaskForm(props) {
     if (!validTitle())
       return false
 
-    fetch("http://localhost:5184/api/TodoItems", {
+    fetch(`${VITE_BACKEND_API_ENDPOINT}/tasks`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json"
       },
-      body: JSON.stringify({title: title, description: description})
+      body: JSON.stringify({id: null, title: title, description: description})
     })
       .then(response => response.json())
       .then(data => {
-          setTasks([data, ...tasks])
+          console.log(tasks)
+          console.log(data)
+          setTasks([data.task, ...tasks])
           resetFields()
           setAddTaskResult("Task added successfully")
       })

@@ -5,22 +5,14 @@ import TaskForm from "./TaskForm"
 function Tasks() {
   const [tasks, setTasks] = useState([])
   const [addTaskResult, setAddTaskResult] = useState("")
+  const VITE_BACKEND_API_ENDPOINT = import.meta.env.VITE_BACKEND_API_ENDPOINT
 
   useEffect(() => {
     fetchTasks()
   }, [])
 
   function fetchTasks () {
-    fetch("http://localhost:5184/api/TodoItems")
-      .then(response => response.json())
-      .then(data => {
-        setTasks(data)
-      })
-      .catch(error => console.log(error.message))
-  }
-
-  function handlePrefillList () {
-    fetch("http://localhost:5184/api/fillTodoItemsList")
+    fetch(`${VITE_BACKEND_API_ENDPOINT}/tasks`)
       .then(response => response.json())
       .then(data => {
         setTasks(data)
@@ -52,17 +44,7 @@ function Tasks() {
         </div>
       </dialog>
       {
-        tasks && tasks.length == 0 && (
-          <>
-            <button 
-                className="btn btn-neutral btn-outline btn-wide my-2 sm:my-5 sm:mx-5 sm:px-2"
-                onClick={handlePrefillList}
-            >
-              Pre-fill Tasks List
-            </button>
-            <p className='text-lg'>No pending tasks</p>
-          </>
-        )
+        tasks && tasks.length == 0 && <p className='text-lg'>No pending tasks</p>
       }
       {
         tasks && tasks.length > 0 && (

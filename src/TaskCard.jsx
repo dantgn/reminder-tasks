@@ -2,9 +2,10 @@ import './App.css'
 
 function TaskCard(props) {
   const {task, fetchTasks} = props
+  const VITE_BACKEND_API_ENDPOINT = import.meta.env.VITE_BACKEND_API_ENDPOINT
 
   function handleRemoveClick() {
-    fetch(`http://localhost:5184/api/TodoItems/${task.id}`, {
+    fetch(`${VITE_BACKEND_API_ENDPOINT}/tasks/${task.id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json"
