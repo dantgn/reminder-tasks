@@ -75,7 +75,7 @@ function TaskForm(props) {
           >
           </textarea>
         </label>
-        <button className="text-right my-5 btn btn-wide w-full uppercase" type="submit">Create Task</button>
+        <button className="text-right my-5 btn btn-neutral btn-outline btn-wide w-full uppercase" type="submit">Create Task</button>
       </form>
       <span className='py-5'>{addTaskResult}</span>
     </>

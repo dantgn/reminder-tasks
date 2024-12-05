@@ -26,7 +26,15 @@ function Tasks() {
 
   return (
     <>
-      <button className="btn btn-neutral btn-outline btn-wide my-5 pr-2" onClick={()=>document.getElementById('addTaskModal').showModal()}>Add new task</button>
+      <div className="sm:flex text-center sm:justify-between my-10">
+        <h1 className='text-2xl uppercase my-5 sm:my-0'>Reminder App</h1>
+        <button 
+          className="btn btn-neutral btn-outline btn-wide w-full sm:max-w-sm"
+          onClick={()=>document.getElementById('addTaskModal').showModal()}
+        >
+          Add new task
+        </button>
+      </div>
       <dialog id="addTaskModal" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
           <TaskForm
@@ -53,16 +61,19 @@ function Tasks() {
           <div className="py-1">
             <span className="text-md text-gray-400 uppercase">{tasks.length} Task{tasks.length > 1 ? 's' : ''}</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-5">
-            {
-              tasks.map( task => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  fetchTasks={fetchTasks}
-                />
-              ))
-            }
+          <div className="rounded-xl shadow-xl border-4 border-gray-400 p-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {
+                tasks.map( task => (
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    fetchTasks={fetchTasks}
+                  />
+                ))
+              }
+            </div>
+
           </div>
           </>
         )
